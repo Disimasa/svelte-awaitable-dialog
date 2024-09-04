@@ -1,7 +1,7 @@
 {
 	"name": "svelte-awaitable-dialog",
 	"description": "Svelte dialog modals information and confirmation from which can be awaited in functions",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",

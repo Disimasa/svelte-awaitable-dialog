@@ -1,6 +1,6 @@
 # svelte-awaitable-dialog
 
-[![NPM](https://img.shields.io/npm/v/svelte-switch.svg)](https://www.npmjs.com/package/svelte-awaitable-dialog)
+[![NPM](https://img.shields.io/npm/v/svelte-awaitable-dialog)](https://www.npmjs.com/package/svelte-awaitable-dialog)
 
 Js library for opening custom modal windows/dialogs/drawers and getting data from them inside a regular js function. 
 With its help, you can get rid of adding additional variables to track the opening of a dialog and storing data from it, 
@@ -62,7 +62,7 @@ SimpleDialog.svelte
 <AwaitableDialog/>
 ```
 
-Also there's opportunity to return data from dialog as promise result by passing data object to resolveDialog function. Check REPL example for example.
+Also there's opportunity to return data from dialog as promise result by passing data object to resolveDialog function. Check REPL for example.
 
 ## API
 
@@ -73,15 +73,15 @@ Opens custom dialog component and returns Promise with data resolved from dialog
 
 **Parameters**
 
-- component: ```ComponentType<T>```. Кастомный Svelte компонент для отображения
-- data: ```Partial<ComponentProps<T>> = {}```. Props соответствующего component
+- component: ```ComponentType<T>```. Custom Svelte component to render
+- data: ```Partial<ComponentProps<T>> = {}```. Props of passed component
 
 #### ```resolveDialog```:
 Resolves openDialog Promise with data and closes dialog
 
 **Parameters**
 
-- data: ```object```. Произвольный объект с данными, которые можно получить в Promise openDialog
+- data: ```object```.   Arbitrary object with data which can be obtained in openDialog Promise
 
 #### ```closeDialog```:
 Closes opened dialog
