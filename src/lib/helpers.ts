@@ -1,8 +1,9 @@
+import type { ComponentProps, ComponentType } from 'svelte'
 import { Dialog, dialogs } from './stores'
 import { get } from 'svelte/store'
 import type { SvelteComponent } from 'svelte'
 
-export async function openDialog(component: SvelteComponent, data: object = {}) {
+export async function openDialog<T>(component: ComponentType<T>, data: Partial<ComponentProps<T>> = {} as Partial<ComponentProps<T>>) {
   const dialog = new Dialog(component, data)
   dialogs.set([...get(dialogs), dialog])
 

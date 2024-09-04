@@ -1,20 +1,24 @@
 import { writable } from 'svelte/store'
-import type {SvelteComponent} from 'svelte'
+import type { ComponentType, SvelteComponent } from 'svelte'
+
+interface ArbitraryObject {
+  [key: string]: any
+}
 
 export class Dialog {
-  component: SvelteComponent
+  component: ComponentType
   data: object
-  resolve: (value: any) => void
-  reject: (reason?: any) => void
-  promise
-  constructor(component: SvelteComponent, data: object) {
+  resolve: (data: ArbitraryObject) => void
+  reject: (data: ArbitraryObject) => void
+  promise: Promise<ArbitraryObject>
+  constructor(component: ComponentType, data: object) {
     this.component = component
     this.data = data
-    this.promise = new Promise((resolve, reject) => {
+    this.promise = new Promise<ArbitraryObject>((resolve, reject) => {
       this.resolve = resolve
       this.reject = reject
     })
   }
 }
 
-export const dialogs = writable<Dialog[]>([])
+export const  dialogs = writable<Dialog[]>([])

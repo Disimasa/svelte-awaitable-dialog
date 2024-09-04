@@ -2,14 +2,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
 
-<script>
+<script lang="ts">
   import AwaitableDialog from '$lib'
   import ConfirmDialog from './components/dialog_examples/ConfirmDialog.svelte'
   import { openDialog } from '$lib'
-
   async function confirm() {
-    openDialog(ConfirmDialog, { title: 'Confirm object deletion?', description: 'This operation cannot be undone.' })
-      .then(data => console.log(data))
+    openDialog(ConfirmDialog, { title: 'qweee', description: 'qwewewe' })
+      .then(data => console.log(data.qwe))
+      .catch(data => console.log(data.qete))
   }
 </script>
 <main>
