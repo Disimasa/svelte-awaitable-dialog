@@ -1,58 +1,95 @@
-# create-svelte
+# svelte-awaitable-dialog
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+[![NPM](https://img.shields.io/npm/v/svelte-switch.svg)](https://www.npmjs.com/package/svelte-awaitable-dialog)
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+Js library for opening custom modal windows/dialogs/drawers and getting data from them inside a regular js function. 
+With its help, you can get rid of adding additional variables to track the opening of a dialog and storing data from it, 
+as well as adding the layout components themselves.
 
-## Creating a project
+## Demo
 
-If you're seeing this, you've probably already done this step. Congrats!
+[REPL Link](https://svelte.dev/repl/ed41385a591b4e25b082cf1caf340e2b?version=4.2.19)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Installation
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm install svelte-awaitable-dialog
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
+Or with Yarn
 
 ```bash
-npm run package
+yarn add svelte-awaitable-dialog
 ```
 
-To create a production version of your showcase app:
+## Usage
 
-```bash
-npm run build
+For example, like that you can get user confirmation by the simplest dialog:
+
+SimpleDialog.svelte
+```svelte
+<script>
+  import { closeDialog, resolveDialog } from 'svelte-awaitable-dialog'
+  import { onMount } from 'svelte'
+
+  export let title = 'Confirm action?'
+  let dialog
+  onMount(() => {
+    dialog && dialog.showModal()
+  })
+</script>
+<dialog bind:this={dialog} on:close={closeDialog}>
+  <h1>{title}</h1>
+  <button on:click={resolveDialog}>Confirm</button>
+  <button on:click={closeDialog}>Cancel</button>
+</dialog>
 ```
 
-You can preview the production build with `npm run preview`.
++page.svelte
+```svelte
+<script lang="ts">
+  import { AwaitableDialog, openDialog } from 'svelte-awaitable-dialog'
+  import SimpleDialog from './components/dialog_examples/SimpleDialog.svelte'
+  async function confirm() {
+    // Here you can pass any custom Svelte component and its props
+    openDialog(SimpleDialog, { title: 'Confirm action?' })
+      .then(() => console.log('CONFIRMED'))
+  }
+</script>
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
+<button on:click={confirm}>Run action</button>
+<!--  You need only one AwaitableDialog on your page (for SvelteKit it's a good idea to add it to root +layout.svelte)-->
+<AwaitableDialog/>
 ```
+
+Also there's opportunity to return data from dialog as promise result by passing data object to resolveDialog function. Check REPL example for example.
+
+## API
+
+### Methods
+
+#### ```openDialog```:
+Opens custom dialog component and returns Promise with data resolved from dialog
+
+**Parameters**
+
+- component: ```ComponentType<T>```. Кастомный Svelte компонент для отображения
+- data: ```Partial<ComponentProps<T>> = {}```. Props соответствующего component
+
+#### ```resolveDialog```:
+Resolves openDialog Promise with data and closes dialog
+
+**Parameters**
+
+- data: ```object```. Произвольный объект с данными, которые можно получить в Promise openDialog
+
+#### ```closeDialog```:
+Closes opened dialog
+
+## License
+
+MIT
+
+## Show your support
+
+Give a ⭐️ if this project helped you!

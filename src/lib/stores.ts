@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 import type { ComponentType, SvelteComponent } from 'svelte'
 
-interface ArbitraryObject {
+export interface ArbitraryObject {
   [key: string]: any
 }
 

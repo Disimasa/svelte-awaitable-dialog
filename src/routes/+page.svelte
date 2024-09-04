@@ -6,14 +6,15 @@
   import AwaitableDialog from '$lib'
   import ConfirmDialog from './components/dialog_examples/ConfirmDialog.svelte'
   import { openDialog } from '$lib'
+  import SimpleDialog from './components/dialog_examples/SimpleDialog.svelte'
   async function confirm() {
-    openDialog(ConfirmDialog, { title: 'qweee', description: 'qwewewe' })
-      .then(data => console.log(data.qwe))
-      .catch(data => console.log(data.qete))
+    openDialog(SimpleDialog, { title: 'Confirm action?' })
+      .then(() => console.log('CONFIRMED'))
   }
 </script>
 <main>
-  <button on:click={confirm}>Confirm</button>
+  <button on:click={confirm}>Run action</button>
+<!--  You need only one AwaitableDialog on your page (for SvelteKit it's a good idea to add it to root +layout.svelte)-->
   <AwaitableDialog/>
 </main>
 
