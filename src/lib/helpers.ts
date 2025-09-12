@@ -1,29 +1,16 @@
-import type { ComponentProps, ComponentType } from 'svelte'
-import { Dialog, dialogs } from './stores'
-import type { ArbitraryObject } from './stores'
-import { get } from 'svelte/store'
-
-export async function openDialog<T>(component: ComponentType<T>, data: Partial<ComponentProps<T>> = {} as Partial<ComponentProps<T>>) {
-  const dialog = new Dialog(component, data)
-  dialogs.set([...get(dialogs), dialog])
-
-  return get(dialogs).slice(-1)[0].promise
-}
-
-export function resolveDialog(data: object = {}) {
-  if (get(dialogs).length > 0) {
-    get(dialogs).slice(-1)[0].resolve(data)
-    closeDialog()
-  }
-}
-
-export function rejectDialog(data: ArbitraryObject = {}) {
-  if (get(dialogs).length > 0) {
-    get(dialogs).slice(-1)[0].reject(data)
-    closeDialog()
-  }
-}
-
-export function closeDialog() {
-  dialogs.set(get(dialogs).slice(0, -1))
+/**
+ * Try to infer the current dialog id from DOM focus.
+ *
+ * Walks up from document.activeElement to the nearest ancestor with
+ * [data-dialog-id], returning that value if present. Returns undefined
+ * on the server or when no active element is associated with a dialog.
+ */
+export function getActiveDialogIdFromDOM(): string | undefined {
+  if (typeof document === 'undefined') return undefined
+  
+  const active = (document.activeElement as HTMLElement | null)
+  if (!active) return undefined
+  
+  const container = active.closest('[data-dialog-id]') as HTMLElement | null
+  return container?.getAttribute('data-dialog-id') ?? undefined
 }

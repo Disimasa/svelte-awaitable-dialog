@@ -5,13 +5,17 @@ export interface ArbitraryObject {
   [key: string]: any
 }
 
+export interface DialogData extends ArbitraryObject {
+  dialogId: string
+}
+
 export class Dialog {
   component: ComponentType
-  data: object
-  resolve: (data: ArbitraryObject) => void
-  reject: (data: ArbitraryObject) => void
+  data: DialogData
+  resolve!: (data: ArbitraryObject) => void
+  reject!: (data: ArbitraryObject) => void
   promise: Promise<ArbitraryObject>
-  constructor(component: ComponentType, data: object) {
+  constructor(component: ComponentType, data: DialogData) {
     this.component = component
     this.data = data
     this.promise = new Promise<ArbitraryObject>((resolve, reject) => {
