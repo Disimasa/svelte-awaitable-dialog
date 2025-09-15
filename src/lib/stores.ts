@@ -15,6 +15,11 @@ export class Dialog {
   resolve!: (data: ArbitraryObject) => void
   reject!: (data: ArbitraryObject) => void
   promise: Promise<ArbitraryObject>
+  onCancel?: () => void
+  finallyCallback?: () => void
+  onClosed?: () => void
+  thenCallbacks?: ((data: ArbitraryObject) => void)[]
+  catchCallbacks?: ((data: ArbitraryObject) => void)[]
   constructor(component: ComponentType, data: DialogData) {
     this.component = component
     this.data = data

@@ -8,11 +8,24 @@
   import { openDialog, resolveDialog, rejectDialog, closeDialog } from '$lib'
   import SimpleDialog from './components/dialog_examples/SimpleDialog.svelte'
   let counter = 0
+
+  function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
   async function confirm() {
     console.log('before open dialog')
     counter++
-    await openDialog(SimpleDialog, { title: 'Confirm action?' + counter })
-      .then(() => console.log('CONFIRMED'))
+    const res =await openDialog(SimpleDialog, { title: 'Confirm action?' + counter })
+      .then(async res => {
+        await timeout(1000)
+        console.log('CONFIRMED', res)
+      })
+      .catch(res => console.log('REJECTED', res))
+      .onClose(() => console.log('CLOSED'))
+      .finally(() => console.log('FINALLY'))
+
+    console.log('res', res)
     console.log('after open dialog')
   }
 

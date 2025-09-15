@@ -1,5 +1,5 @@
 <script>
-  import { closeDialog, resolveDialog } from '$lib'
+  import { closeDialog, rejectDialog, resolveDialog } from '$lib'
   import { onMount } from 'svelte'
 
   export let title = 'Confirm action?'
@@ -10,6 +10,7 @@
 </script>
 <dialog bind:this={dialog} on:close={closeDialog}>
   <h1>{title}</h1>
-  <button on:click={resolveDialog}>Confirm</button>
+  <button on:click={() => resolveDialog({ message: 'qwe' })}>Confirm</button>
+  <button on:click={() => rejectDialog({ message: 'qwe' })}>Reject</button>
   <button on:click={closeDialog}>Cancel</button>
 </dialog>
