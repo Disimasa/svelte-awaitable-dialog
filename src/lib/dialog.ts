@@ -1,7 +1,7 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte'
 import { Dialog, dialogs } from './stores'
-import type { ArbitraryObject, DialogData } from './stores'
-import { getActiveDialogIdFromDOM } from './helpers'
+import type { ArbitraryObject, DialogData }     from './stores'
+import { getActiveDialogIdFromDOM, randomUUID } from './helpers'
 
 // Helpers to reduce duplication
 function removeTargetDialog(targetDialogId?: string): Dialog | undefined {
@@ -95,7 +95,7 @@ export class DialogPromise<T> {
  * @returns Promise with arbitrary resolved data from the dialog
  */
 export function openDialog<T extends SvelteComponent>(component: ComponentType<T>, data: Partial<ComponentProps<T>> = {} as Partial<ComponentProps<T>>): DialogPromise<unknown> {
-  const dialogData: DialogData = { dialogId: crypto.randomUUID(), ...(data as object) } as DialogData
+  const dialogData: DialogData = { dialogId: randomUUID(), ...(data as object) } as DialogData
   const dialog = new Dialog(component, dialogData)
   dialogs.update(current => [...current, dialog])
 
